@@ -14,7 +14,7 @@ function checkPassword() {
 }
 
 function startCounter() {
-  const startDate = new Date("2024-07-01");
+  const startDate = new Date("2025-14-07");
   const today = new Date();
   const diffTime = Math.abs(today - startDate);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
