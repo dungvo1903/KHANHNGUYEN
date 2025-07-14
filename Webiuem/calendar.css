@@ -90,3 +90,47 @@ th, td {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
+.image-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+}
+.image-modal img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.nav-btn.left { left: 10px; }
+.nav-btn.right { right: 10px; }
+
+.thumb {
+  cursor: pointer;
+}
+
