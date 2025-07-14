@@ -186,29 +186,31 @@ function saveLetterToLocal(content) {
 }
 
 
+
 function showSavedLetter() {
-    const displayElement = document.getElementById('savedLetter');
-    const letters = getLettersFromLocal();
-    
-    if (letters.length > 0) {
-        const lastLetter = letters[0];
+  const displayElement = document.getElementById('savedLetter');
+
+  firebase.firestore().collection("love_letters")
+    .orderBy("timestamp", "desc")
+    .limit(1)
+    .get()
+    .then((querySnapshot) => {
+      if (!querySnapshot.empty) {
+        const doc = querySnapshot.docs[0];
+        const letter = doc.data();
         displayElement.innerHTML = `
-            <h3>Thư gần nhất:</h3>
-            <p>${lastLetter.content}</p>
-            <small>Gửi lúc: ${new Date(lastLetter.timestamp).toLocaleString()}</small>
-            <button id="deleteLetter"><i class="fas fa-trash"></i> Xóa thư</button>
+          <h3>Thư gần nhất:</h3>
+          <p>${letter.content}</p>
+          <small>Gửi lúc: ${new Date(letter.timestamp).toLocaleString()}</small>
         `;
-        
-        document.getElementById('deleteLetter').addEventListener('click', function() {
-            if (confirm('Bạn có chắc muốn xóa thư này?')) {
-                letters.shift(); // Xóa thư đầu tiên
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(letters));
-                showSavedLetter();
-            }
-        });
-    } else {
+      } else {
         displayElement.innerHTML = '<p>Chưa có thư được lưu...</p>';
-    }
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy thư từ Firebase:", error);
+      displayElement.innerHTML = '<p class="error-text">Không thể tải thư từ server.</p>';
+    });
 }
 
 async function backupLettersToEmail() {
