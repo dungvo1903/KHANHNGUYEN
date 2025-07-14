@@ -7,7 +7,7 @@ function checkPassword() {
     document.getElementById('passwordScreen').style.display = "none";
     document.getElementById('mainContent').style.display = "block";
     startCounter();
-    loadLatestLetter();
+    loadAllLetters();
   } else {
     document.getElementById('errorMsg').innerText = "Sai mật khẩu rồi bbi 😢";
   }
@@ -36,22 +36,25 @@ document.getElementById("letterForm").addEventListener("submit", function(e) {
   });
 });
 
-function loadLatestLetter() {
+function loadAllLetters() {
   firebase.firestore().collection("love_letters")
     .orderBy("timestamp", "desc")
-    .limit(1)
     .get()
     .then((snapshot) => {
-      const letter = snapshot.docs[0]?.data();
-      if (letter) {
-        document.getElementById("latestLetter").innerHTML = `
-          <h3>📩 Thư gần nhất:</h3>
-          <p>${letter.content}</p>
-          <small>Gửi lúc: ${new Date(letter.timestamp).toLocaleString()}</small>
+      const display = document.getElementById("latestLetter");
+      display.innerHTML = "<h3>📜 Tất cả thư đã gửi:</h3>";
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        display.innerHTML += `
+          <div class="letter-box">
+            <p>${data.content}</p>
+            <small>🕒 Gửi lúc: ${new Date(data.timestamp).toLocaleString()}</small>
+          </div>
         `;
-      }
+      });
     });
 }
+
 
 // Tự động chuyển ảnh trong slider
 setInterval(() => {
