@@ -77,7 +77,7 @@ document.getElementById("musicToggle").addEventListener("click", function() {
 });
 
 function startCounter() {
-  const startDate = new Date("2024-07-01T00:00:00");
+  const startDate = new Date("2025-14-07T00:00:00");
   setInterval(() => {
     const now = new Date();
     let diff = Math.floor((now - startDate) / 1000);
