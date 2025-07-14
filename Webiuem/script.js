@@ -114,3 +114,22 @@ setInterval(() => {
   document.getElementById("passwordScreen").appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
 }, 300);
+let modalImages = [];
+let currentIndex = 0;
+
+function showModal(src) {
+  modalImages = Array.from(document.querySelectorAll(".thumb")).map(img => img.src);
+  currentIndex = modalImages.indexOf(src);
+  document.getElementById("modalImage").src = src;
+  document.getElementById("imageModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("imageModal").style.display = "none";
+}
+
+function changeModalImage(step) {
+  if (modalImages.length === 0) return;
+  currentIndex = (currentIndex + step + modalImages.length) % modalImages.length;
+  document.getElementById("modalImage").src = modalImages[currentIndex];
+}
