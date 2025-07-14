@@ -70,7 +70,7 @@
       events.forEach(event => {
         const li = document.createElement("li");
         li.innerHTML = `<strong>${event.date}</strong> — ${event.desc}
-          ${event.images ? event.images.map(url => `<br><img src="${url}" class="thumb">`).join("") : ""}
+          ${event.images ? event.images.map(url => `<br><img src="${url}" class="thumb" onclick="showModal(this.src)">`).join("") : ""}
           <br><button onclick="deleteEvent('${event.id}')">🗑️</button>`;
         listEl.appendChild(li);
       });
