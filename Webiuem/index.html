@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chuyện Tình Của Chúng Ta 💖</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCStRKAjAtYsfyQ-raRypy7WNWcP7F9j3Y",
+      authDomain: "yeu-em-nguyen.firebaseapp.com",
+      projectId: "yeu-em-nguyen",
+      storageBucket: "yeu-em-nguyen.firebasestorage.app",
+      messagingSenderId: "1053571044076",
+      appId: "1:1053571044076:web:48d8cdf56573fd82b20bc9",
+      measurementId: "G-Q1MR9H23FR"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+</head>
+<body>
+  <div id="passwordScreen">
+    <div class="lock-box">
+      <h2>🔒 Nhập mật khẩu tình yêu</h2>
+      <input type="password" id="passwordInput" placeholder="Nhập mật khẩu..." />
+      <button onclick="checkPassword()">Mở Khóa</button>
+      <p id="errorMsg"></p>
+    </div>
+  </div>
+
+  <div id="mainContent" style="display:none">
+    <h1 class="fade-in">❤️ Hành Trình Yêu Của Chúng Ta ❤️</h1>
+
+    <div class="counter fade-in">
+      <h2>Chúng ta đã yêu nhau được:</h2>
+      <div class="counter-box">
+        <div class="time-box"><span id="years">0</span>Năm</div>
+        <div class="time-box"><span id="months">0</span>Tháng</div>
+        <div class="time-box"><span id="days">0</span>Ngày</div>
+        <div class="time-box"><span id="hours">0</span>Giờ</div>
+        <div class="time-box"><span id="minutes">0</span>Phút</div>
+        <div class="time-box"><span id="seconds">0</span>Giây</div>
+      </div>
+    </div>
+
+    <button id="musicToggle">🔈 Bật nhạc</button>
+    <a href="calendar.html" class="back-btn">📅 Xem lịch sự kiện</a>
+
+    <div class="gallery-section fade-in">
+      <h2>📸 Ngày đầu tiên gặp nhau</h2>
+      <div class="gallery-album">
+        <img src="assets/images/thuguiem.jpg" />
+        <img src="assets/images/photo1.jpg" />
+      </div>
+    </div>
+
+    <div class="gallery-section fade-in">
+      <h2>🎂 Kỷ niệm 1 năm</h2>
+      <div class="gallery-album">
+        <img src="assets/images/photo2.jpg" />
+        <img src="assets/images/thuguiem.jpg" />
+      </div>
+    </div>
+
+    <div class="letter-section fade-in">
+      <h2>💌 Gửi Em</h2>
+      <form id="letterForm">
+        <textarea id="letterContent" placeholder="Viết điều anh muốn nói..."></textarea>
+        <button type="submit">Gửi Thư</button>
+      </form>
+      <div id="latestLetter"></div>
+    </div>
+
+    <audio id="bgMusic" loop>
+      <source src="assets/music/nhaciuem.mp3" type="audio/mpeg">
+      Trình duyệt của bạn không hỗ trợ audio.
+    </audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

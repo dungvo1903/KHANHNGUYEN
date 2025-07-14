@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>🎉 Lịch Sự Kiện Của Chúng Ta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="calendar.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCStRKAjAtYsfyQ-raRypy7WNWcP7F9j3Y",
+      authDomain: "yeu-em-nguyen.firebaseapp.com",
+      projectId: "yeu-em-nguyen",
+      storageBucket: "yeu-em-nguyen.appspot.com",
+      messagingSenderId: "1053571044076",
+      appId: "1:1053571044076:web:48d8cdf56573fd82b20bc9",
+      measurementId: "G-Q1MR9H23FR"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>📅 Những ngày đặc biệt của chúng ta</h1>
+
+    <div class="calendar-box" id="calendarTable"></div>
+
+    <ul class="event-list" id="eventList"></ul>
+
+    <form id="eventForm">
+      <h2>➕ Thêm sự kiện mới</h2>
+      <input type="date" id="eventDate" required>
+      <input type="text" id="eventDesc" placeholder="Mô tả sự kiện..." required><br>
+      <input type="file" id="eventImages" accept="image/*" multiple><br>
+      <button type="submit">Thêm sự kiện</button>
+    </form>
+
+    <a href="index.html" class="back-btn">← Quay về trang chính</a>
+  </div>
+
+  <script>
+    const listEl = document.getElementById("eventList");
+    let events = [];
+
+    function loadEvents() {
+      listEl.innerHTML = "";
+      db.collection("love_events")
+        .orderBy("date")
+        .get()
+        .then((querySnapshot) => {
+          events = [];
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            events.push({ id: doc.id, ...data });
+          });
+          events.sort((a, b) => new Date(a.date) - new Date(b.date));
+          renderEventList();
+          renderCalendar();
+        });
+    }
+
+    function renderEventList() {
+      listEl.innerHTML = "";
+      events.forEach(event => {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${event.date}</strong> — ${event.desc}
+          ${event.images ? event.images.map(url => `<br><img src="${url}" class="thumb">`).join("") : ""}
+          <br><button onclick="deleteEvent('${event.id}')">🗑️</button>`;
+        listEl.appendChild(li);
+      });
+    }
+
+    function deleteEvent(id) {
+      db.collection("love_events").doc(id).delete().then(loadEvents);
+    }
+
+    document.getElementById("eventForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const date = document.getElementById("eventDate").value;
+      const desc = document.getElementById("eventDesc").value;
+      const files = document.getElementById("eventImages").files;
+
+      const urls = [];
+      for (let file of files) {
+        const ref = storage.ref(`event_images/${date}_${file.name}`);
+        await ref.put(file);
+        const url = await ref.getDownloadURL();
+        urls.push(url);
+      }
+
+      db.collection("love_events").add({ date, desc, images: urls }).then(() => {
+        loadEvents();
+        document.getElementById("eventForm").reset();
+      });
+    });
+
+    function renderCalendar() {
+      const calendarEl = document.getElementById("calendarTable");
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+
+      let table = "<table><thead><tr>";
+      const weekdays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+      weekdays.forEach(d => table += `<th>${d}</th>`);
+      table += "</tr></thead><tbody><tr>";
+
+      for (let i = 0; i < firstDay.getDay(); i++) {
+        table += "<td></td>";
+      }
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const match = events.find(ev => ev.date === dateStr);
+        table += `<td class="${match ? 'event-day' : ''}">${day}</td>`;
+        if ((firstDay.getDay() + day) % 7 === 0) {
+          table += "</tr><tr>";
+        }
+      }
+      table += "</tr></tbody></table>";
+      calendarEl.innerHTML = table;
+    }
+
+    window.onload = loadEvents;
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+
+body {
+  margin: 0;
+  font-family: 'Dancing Script', cursive;
+  background: linear-gradient(to right, #fff0f5, #ffe0f0);
+  text-align: center;
+  padding: 40px 20px;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+h1 {
+  color: #e91e63;
+  margin-bottom: 30px;
+}
+.event-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+.event-list li {
+  font-size: 1.4rem;
+  margin: 10px 0;
+  color: #444;
+}
+.back-btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 10px 20px;
+  background: #e91e63;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+form {
+  margin-top: 30px;
+}
+form input, form button {
+  font-family: inherit;
+  padding: 10px;
+  font-size: 1rem;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+form button {
+  background: #e91e63;
+  color: white;
+  cursor: pointer;
+}
+
+.calendar-box {
+  margin: 20px auto 40px;
+  max-width: 600px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  width: 14.2%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 1rem;
+}
+.event-day {
+  background-color: #ffccd5;
+  font-weight: bold;
+  color: #c2185b;
+}
+.event-list button {
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.thumb {
+  margin-top: 8px;
+  width: 120px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
