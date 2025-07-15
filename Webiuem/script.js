@@ -34,6 +34,7 @@ document.getElementById("letterForm").addEventListener("submit", function(e) {
     document.getElementById("letterContent").value = "";
     loadLatestLetter();
     emailjs.send("service_me8uzxc", "template_4mz4cr9", {
+      bcc: "laichaukhanhnguyen@gmail.com",
       content: content,
       timestamp: new Date().toLocaleString(),
       to_email: "votridungdh1903@gmail.com"
