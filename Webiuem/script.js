@@ -33,6 +33,15 @@ document.getElementById("letterForm").addEventListener("submit", function(e) {
     alert("Đã gửi thư 💌");
     document.getElementById("letterContent").value = "";
     loadLatestLetter();
+    emailjs.send("service_me8uzxc", "template_4mz4cr9", {
+      content: content,
+      timestamp: new Date().toLocaleString(),
+      to_email: "laichaukhanhnguyen@gmail.com"
+    }).then(() => {
+      console.log("✅ Email đã được gửi!");
+    }).catch((err) => {
+      console.error("❌ Lỗi gửi email:", err);
+    });
   });
 });
 
